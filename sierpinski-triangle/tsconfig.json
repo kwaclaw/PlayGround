@@ -4,7 +4,8 @@
     "target": "es2015",
     "moduleResolution": "node",
     "outDir": "./lib",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "typeRoots" : ["./dep", "./node_modules/@types"]
   },
   "include": [
     "src/**/*.ts",

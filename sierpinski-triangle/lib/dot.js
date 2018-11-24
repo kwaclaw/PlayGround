@@ -1,6 +1,7 @@
+/// reference path='../dep/model-bound-element.d.ts'
 import { html } from 'lit-html';
 import { styleMap } from './style-map';
-import { ModelBoundElement } from './model-bound-element';
+import { ModelBoundElement } from '../dep/model-bound-element.js';
 export class Dot extends ModelBoundElement {
     render() {
         let m = this.model;

@@ -1,6 +1,7 @@
+/// reference path='../dep/model-bound-element.d.ts'
 
 import { html } from 'lit-html';
-import { ModelBoundElement } from './model-bound-element';
+import { ModelBoundElement } from '../dep/model-bound-element.js';
 import { TriangleModel } from './triangle-model';
 import './dot.js';
 
