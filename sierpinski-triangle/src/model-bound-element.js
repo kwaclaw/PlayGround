@@ -1,4 +1,3 @@
-
 import { observe, unobserve } from '@nx-js/observer-util/dist/es.es6.js';
 import { TemplatedElement } from './templated-element.js';
 

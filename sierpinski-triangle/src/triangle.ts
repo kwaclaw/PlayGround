@@ -1,9 +1,8 @@
-/// reference path='../dep/model-bound-element.d.ts'
 
 import { html } from 'lit-html';
-import { ModelBoundElement } from '../dep/model-bound-element.js';
+import { ModelBoundElement } from './model-bound-element.js';
 import { TriangleModel } from './triangle-model';
-import './dot.js';
+import './dot';
 
 //TODO if we want the dots to be rendered early we need a different way to build the tree structure,
 // because currently they are eligible for rendering only once the whole tree is built

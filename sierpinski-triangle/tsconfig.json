@@ -5,11 +5,11 @@
     "moduleResolution": "node",
     "outDir": "./lib",
     "rootDir": "./src",
-    "typeRoots" : ["./dep", "./node_modules/@types"]
+    "allowJs": true
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.d.ts",
+    "src/**/*.js"
   ],
   "exclude": []
 }
