@@ -5,6 +5,9 @@ import { ModelBoundElement } from '../dep/model-bound-element.js';
 import { TriangleModel } from './triangle-model';
 import './dot.js';
 
+//TODO if we want the dots to be rendered early we need a different way to build the tree structure,
+// because currently they are eligible for rendering only once the whole tree is built
+
 export class SierpinskiTriangle extends ModelBoundElement<TriangleModel> {
   render() {
     let m = this.model;
@@ -16,9 +19,9 @@ export class SierpinskiTriangle extends ModelBoundElement<TriangleModel> {
       `;
     }
 
-    const slowDown = true;
+    const slowDown = false;
     if (slowDown) {
-      const e = performance.now() + 1.8;
+      const e = performance.now() + 5;
       while (performance.now() < e) {
         // Artificially long execution time.
       }
