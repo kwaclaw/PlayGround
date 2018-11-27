@@ -1,3 +1,1 @@
-Experiments with making async rendering LitElement.
-
-Don't use this, it's just an experiment.
+Porting sierpinski triangle demo from LitElement to plain lit-html.
