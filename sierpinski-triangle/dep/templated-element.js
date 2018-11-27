@@ -21,9 +21,7 @@ export class TemplatedElement extends HTMLElement {
     return true;
   }
 
-  async invalidate(renderCallback) {
-    const doRender = renderCallback || this._doRender.bind(this);
-
+  async invalidate() {
     if (!this._requestedRender) {
       this._requestedRender = true;
 
@@ -32,7 +30,7 @@ export class TemplatedElement extends HTMLElement {
       _renderPromise.set(this, new Promise((r) => resolver = r));
       await previousRenderPromise;
 
-      doRender();
+      this._doRender();
 
       if (resolver) {
         resolver(!this._requestedRender);

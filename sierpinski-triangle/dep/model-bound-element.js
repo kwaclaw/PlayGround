@@ -16,16 +16,16 @@ export class ModelBoundElement extends TemplatedElement {
   //       can detect which properties were used at the end of the call!
   connectedCallback() {
     //TODO investigate the Queue scheduler for nx-js
-    // We currently use a scheduler that *IS* the invalidate() function with the observer as argument,
-    // this only works because invalidate() takes an (optional) doRender() equivalent as an argument.
-    // We do this because we want to use invalidate() while at the same time have the observer run synchronously.
+    // We currently use a scheduler that *IS* the invalidate() function.
+    // We do this because we want to use the micro-task based rendering pipeline.
     this._observer = observe(() => {
-        // this._doRender() reads the relevant view model properties syncronously.
-        this._doRender();
+        // super._doRender() reads the relevant view model properties synchronously.
+        super._doRender();
     }, {
-      // Sometimes we dont' want to run the observer right away (to start the observation process)
-      // because the observed model/properties might still be undefined at this time.
-      //lazy: true,
+      // We dont' want to run the observer right away (to start the observation process),
+      // as it is run as part of rendering anyway.
+      // Note: the observed model/properties must be defined at the time of first render.
+      lazy: true,
       scheduler: this.invalidate.bind(this)
       /* debugger: console.log */
     });
@@ -34,14 +34,12 @@ export class ModelBoundElement extends TemplatedElement {
     super.connectedCallback();
   }
 
+  // our _doRender() is wrapped by the observer, thus observing property access
+  _doRender() {
+    this._observer();
+  }
+
   disconnectedCallback() {
     unobserve(this._observer);
   }
-
-  firstRendered() {
-    // This starts the observation process, assuming we have the lazy option turned on.
-    //this._observer();
-  }
-
-  rendered() { }
 }
