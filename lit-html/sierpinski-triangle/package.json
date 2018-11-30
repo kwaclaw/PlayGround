@@ -12,12 +12,8 @@
   "author": "The Polymer Authors",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "sinon": "^4.0.0",
-    "@types/chai": "^4.1.6",
-    "chai": "^4.2.0",
-    "polymer-cli": "^1.9.1",
-    "typescript": "^3.1.4",
     "@nx-js/observer-util": "^4.2.0",
-    "lit-html": "^0.13.0"
+    "lit-html": "^0.14.0",
+    "typescript": "^3.2.1"
   }
 }
