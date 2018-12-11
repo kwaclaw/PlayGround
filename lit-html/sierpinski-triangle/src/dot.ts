@@ -18,6 +18,15 @@ export class Dot extends ModelBoundElement<DotModel> {
       lineHeight: (s) + 'px',
       background: hover ? '#ff0' : '#61dafb',
     });
+
+    const slowDown = true;
+    if (slowDown) {
+      const e = performance.now() + 0.8;
+      while (performance.now() < e) {
+        // Artificially long execution time.
+      }
+    }
+
     return html`
       <style>
         :host {

@@ -18,9 +18,9 @@ export class SierpinskiTriangle extends ModelBoundElement<TriangleModel> {
       `;
     }
 
-    const slowDown = false;
+    const slowDown = true;
     if (slowDown) {
-      const e = performance.now() + 5;
+      const e = performance.now() + 0.8;
       while (performance.now() < e) {
         // Artificially long execution time.
       }
