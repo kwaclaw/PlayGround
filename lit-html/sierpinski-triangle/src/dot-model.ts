@@ -1,4 +1,4 @@
-import { observable } from '@nx-js/observer-util/dist/es.es6.js';
+import { observable } from '../node_modules/@nx-js/observer-util/dist/es.es6.js';
 
 export class DotModel {
     constructor(x?: number, y?: number, size?: number) {

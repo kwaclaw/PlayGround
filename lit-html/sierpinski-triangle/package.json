@@ -1,10 +1,10 @@
 {
   "name": "sierpinski-triangle",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "scripts": {
-    "start": "polymer serve --npm",
+    "start": "http-server",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +15,8 @@
     "@nx-js/observer-util": "^4.2.0",
     "lit-html": "^0.14.0",
     "typescript": "^3.2.1"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
   }
 }

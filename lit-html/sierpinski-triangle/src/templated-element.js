@@ -1,4 +1,4 @@
-import { html, render, TemplateResult } from 'lit-html';
+import { html, render, TemplateResult } from '../node_modules/lit-html/lit-html.js';
 
 const microtaskPromise = new Promise((resolve) => resolve(true));
 const _renderPromise = new WeakMap();

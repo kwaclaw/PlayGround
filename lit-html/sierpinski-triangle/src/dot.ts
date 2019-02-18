@@ -1,6 +1,6 @@
 
-import { html } from 'lit-html';
-import { styleMap } from 'lit-html/directives/style-map';
+import { html } from '../node_modules/lit-html/lit-html.js';
+import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
 import { ModelBoundElement } from './model-bound-element.js';
 import { DotModel } from './dot-model';
 

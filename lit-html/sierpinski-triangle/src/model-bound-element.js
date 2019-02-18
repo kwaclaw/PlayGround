@@ -1,4 +1,4 @@
-import { observe, unobserve } from '@nx-js/observer-util/dist/es.es6.js';
+import { observe, unobserve } from '../node_modules/@nx-js/observer-util/dist/es.es6.js';
 import { TemplatedElement } from './templated-element.js';
 
 const _model = new WeakMap();
