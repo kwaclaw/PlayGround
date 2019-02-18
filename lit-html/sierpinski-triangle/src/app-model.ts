@@ -3,7 +3,7 @@ import { observable } from '../node_modules/@nx-js/observer-util/dist/es.es6.js'
 
 export class AppModel {
     constructor(initialSize: number) {
-        this.intervalID = setInterval(() => {
+        this.intervalID = window.setInterval(() => {
             this.sharedModel.seconds = this.sharedModel.seconds % 10 + 1;
         }, 1000);
 
