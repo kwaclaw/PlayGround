@@ -1,5 +1,4 @@
-import { html, render, TemplateResult } from '../node_modules/lit-html/lit-html.js';
-
+import { html, render, TemplateResult } from 'lit-html';
 
 export class TemplatedElement extends HTMLElement {
 

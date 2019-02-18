@@ -1,5 +1,5 @@
-import { TriangleModel } from "./triangle-model.js";
-import { observable } from '../node_modules/@nx-js/observer-util/dist/es.es6.js';
+import { TriangleModel } from "./triangle-model";
+import { observable } from '@nx-js/observer-util/dist/es.es6.js';
 
 export class AppModel {
     constructor(initialSize: number) {

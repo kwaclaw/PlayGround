@@ -1,10 +1,10 @@
 
-import { html } from '../node_modules/lit-html/lit-html.js';
-import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
-import { ModelBoundElement } from './model-bound-element.js';
-import { AppModel } from './app-model.js';
+import { html } from 'lit-html';
+import { styleMap } from 'lit-html/directives/style-map';
+import { ModelBoundElement } from './model-bound-element';
+import { AppModel } from './app-model';
 
-import './triangle.js';
+import './triangle';
 
 const containerStyle = {
   position: 'absolute',
