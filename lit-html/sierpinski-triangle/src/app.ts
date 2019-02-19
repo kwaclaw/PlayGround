@@ -39,7 +39,13 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
     const scale = 1 + (t > 5 ? 10 - t : t) / 10;
     const transform = 'scaleX(' + (scale / 2.1) + ') scaleY(0.7) translateZ(0.1px)';
     const style = styleMap({ ...containerStyle, transform });
+
+    const rendersPerSecond = ModelBoundElement.renderCount * 1000 / ModelBoundElement.totalTime;
+
     return html`
+      <div>
+        <span>Render events per second: ${rendersPerSecond.toFixed(2)}</span>
+      </div>
       <div style="${style}">
         <div>
           <s-triangle .model="${triangleModel}"></s-triangle>
