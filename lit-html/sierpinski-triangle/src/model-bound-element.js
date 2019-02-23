@@ -5,18 +5,12 @@ import TemplatedElement from './templated-element';
 const _model = new WeakMap();
 const _scheduler = new WeakMap();
 
-const _startTime = performance.now();
-let _renderCount = 0;
-
 export default class ModelBoundElement extends TemplatedElement {
   get model() { return _model.get(this); }
   set model(value) { _model.set(this, value); }
 
   get scheduler() { return _scheduler.get(this); }
   set scheduler(value) { _scheduler.set(this, value); }
-
-  static get renderCount() { return _renderCount; }
-  static get totalTime() { return performance.now() - _startTime; }
 
   // Setting up observer of view model changes.
   // NOTE: the observer will not get re-triggered until the observed properties are read!!!
@@ -25,7 +19,6 @@ export default class ModelBoundElement extends TemplatedElement {
   //       can detect which properties were used at the end of the call!
   connectedCallback() {
     this._observer = observe(() => {
-      _renderCount += 1;
       // super._doRender() reads the relevant view model properties synchronously.
       super._doRender();
     }, {

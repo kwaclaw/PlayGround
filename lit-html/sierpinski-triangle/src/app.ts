@@ -20,16 +20,35 @@ const containerStyle = {
   background: '#eee',
 };
 
+class DemoScheduler extends BatchScheduler {
+  constructor(interval: number) {
+    super(interval);
+    this._startTime = performance.now();
+    this._renderCount = 0;
+  }
+
+  private _startTime: number;
+  private _renderCount: number;
+
+  get renderCount() { return this._renderCount; }
+  get totalTime() { return performance.now() - this._startTime; }
+
+  _runReactions(): void {
+    super._runReactions();
+    this._renderCount += 1;
+  }
+}
+
 export class TriangleApplication extends ModelBoundElement<AppModel> {
   constructor() {
     super();
     this.model = new AppModel(1000);
 
-    // in this we batch up render requests to run only every 300 milliseconds
-    const globalBatchScheduler = new BatchScheduler(300);
-    this.scheduler = (reaction) => globalBatchScheduler.schedule(reaction);
+    // here we batch up render requests to run at most every 16 milliseconds;
+    // highest frequency depends on mimimum delay for window.setTimeout()
+    this.scheduler = new DemoScheduler(16);
 
-    // in this example we are using a low priority queue to schedule rendering
+    // here we are using a low priority queue to schedule rendering
     // this.scheduler = new Queue(priorities.LOW);
   }
 
@@ -51,7 +70,7 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
     const transform = 'scaleX(' + (scale / 2.1) + ') scaleY(0.7) translateZ(0.1px)';
     const style = styleMap({ ...containerStyle, transform });
 
-    const rendersPerSecond = ModelBoundElement.renderCount * 1000 / ModelBoundElement.totalTime;
+    const rendersPerSecond = this.scheduler.renderCount * 1000 / this.scheduler.totalTime;
 
     return html`
       <div>

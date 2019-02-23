@@ -6,9 +6,6 @@ import BatchScheduler from './batch-scheduler';
 export = ModelBoundElement;
 
 declare class ModelBoundElement<Observable extends object> extends TemplatedElement {
-    static renderCount: number;
-    static totalTime: number;
-
     protected _observer: Function;
 
     model: Observable;
