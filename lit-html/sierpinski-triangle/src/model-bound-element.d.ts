@@ -12,6 +12,7 @@ declare class ModelBoundElement<Observable extends object> extends TemplatedElem
     protected _observer: Function;
 
     model: Observable;
+    scheduler: any;
     connectedCallback(): void;
     disconnectedCallback(): void;
 }

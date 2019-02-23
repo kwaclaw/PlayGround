@@ -24,6 +24,13 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
   constructor() {
     super();
     this.model = new AppModel(1000);
+
+    // in this we batch up render requests to run only every 300 milliseconds
+    const globalBatchScheduler = new BatchScheduler(300);
+    this.scheduler = (reaction) => globalBatchScheduler.schedule(reaction);
+
+    // in this example we are using a low priority queue to schedule rendering
+    // this.scheduler = new Queue(priorities.LOW);
   }
 
   connectedCallback() {
@@ -52,7 +59,7 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
       </div>
       <div style="${style}">
         <div>
-          <s-triangle .model="${triangleModel}"></s-triangle>
+          <s-triangle .model="${triangleModel}" .scheduler="${this.scheduler}"></s-triangle>
         </div>
       </div>
     `;

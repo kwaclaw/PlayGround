@@ -15,7 +15,7 @@ export class SierpinskiTriangle extends ModelBoundElement<TriangleModel> {
     let m = this.model;
     if (m.dot) {
       return html`
-        <s-dot .model="${m.dot}">
+        <s-dot .model="${m.dot}" .scheduler="${this.scheduler}">
           ${m.sharedModel.seconds}
         </s-dot>
       `;
@@ -30,9 +30,9 @@ export class SierpinskiTriangle extends ModelBoundElement<TriangleModel> {
     }
 
     return html`
-      <s-triangle .model="${m.middle}"></s-triangle>
-      <s-triangle .model="${m.left}"></s-triangle>
-      <s-triangle .model="${m.right}"></s-triangle>
+      <s-triangle .model="${m.middle}" .scheduler="${this.scheduler}"></s-triangle>
+      <s-triangle .model="${m.left}" .scheduler="${this.scheduler}"></s-triangle>
+      <s-triangle .model="${m.right}" .scheduler="${this.scheduler}"></s-triangle>
     `;
   }
 }
