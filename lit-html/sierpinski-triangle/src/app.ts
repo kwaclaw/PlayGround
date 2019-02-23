@@ -1,8 +1,12 @@
 
 import { html } from 'lit-html';
 import { styleMap } from 'lit-html/directives/style-map';
-import { ModelBoundElement } from './model-bound-element';
 import { AppModel } from './app-model';
+import { Queue, priorities } from '@nx-js/queue-util';
+
+// ES6 modules with default export
+import ModelBoundElement from './model-bound-element';
+import BatchScheduler from './batch-scheduler';
 
 import './triangle';
 

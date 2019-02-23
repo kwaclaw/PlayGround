@@ -1,7 +1,10 @@
 
 import { html } from 'lit-html';
-import { ModelBoundElement } from './model-bound-element';
 import { TriangleModel } from './triangle-model';
+
+// ES6 module with default export
+import ModelBoundElement from './model-bound-element';
+
 import './dot';
 
 //TODO if we want the dots to be rendered early we need a different way to build the tree structure,

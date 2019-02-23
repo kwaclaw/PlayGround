@@ -1,8 +1,10 @@
 
 import { html } from 'lit-html';
 import { styleMap } from 'lit-html/directives/style-map';
-import { ModelBoundElement } from './model-bound-element';
 import { DotModel } from './dot-model';
+
+// ES6 module with default export
+import ModelBoundElement from './model-bound-element';
 
 export class Dot extends ModelBoundElement<DotModel> {
   render() {
