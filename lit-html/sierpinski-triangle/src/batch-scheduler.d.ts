@@ -8,6 +8,7 @@ declare class BatchScheduler {
     interval: number;
     lastRendered: number;
 
-    schedule(reaction: Function): void;
+    add(reaction: Function): void;
+    delete(reaction: Function): boolean;
 }
 

@@ -4,7 +4,8 @@ const _lastRendered = new WeakMap();
 const _timerID = new WeakMap();
 const _reactions = new WeakMap();
 
-// try to run at most every 'interval' milliseconds
+// Scheduler for use with @nx-js/observer-util.
+// Runs at most every 'interval' milliseconds.
 export default class BatchScheduler {
   constructor(interval) {
     _interval.set(this, interval);
@@ -20,12 +21,13 @@ export default class BatchScheduler {
     reactions.forEach((reaction) => {
       try { reaction(); } catch (e) { }
     });
+    reactions.clear();
+
     _timerID.set(this, null);
     _lastRendered.set(this, performance.now());
-    reactions.clear();
   }
 
-  schedule(reaction) {
+  add(reaction) {
     const reactions = _reactions.get(this);
     reactions.add(reaction);
     if (_timerID.get(this)) {
@@ -39,5 +41,10 @@ export default class BatchScheduler {
     } else {
       this._runReactions(this);
     }
+  }
+
+  delete(reaction) {
+    const reactions = _reactions.get(this);
+    return reactions.delete(reaction);
   }
 }
