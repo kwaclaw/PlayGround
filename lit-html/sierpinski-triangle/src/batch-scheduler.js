@@ -28,23 +28,21 @@ export default class BatchScheduler {
 
     _timerID.set(this, null);
     _lastRendered.set(this, performance.now());
+
     return count;
   }
 
   add(reaction) {
-    const reactions = this.reactions;
-    const firstInLongTime = reactions.count === 0;
-
     this.reactions.add(reaction);
-    if (!firstInLongTime && _timerID.get(this)) {
+    if (_timerID.get(this)) {
       return;
     }
 
-    const delta = firstInLongTime ? 0 : performance.now() - this.lastRendered;
+    const delta = performance.now() - this.lastRendered;
     if (delta < this.interval) {
-      _timerID.set(this, setTimeout(() => this._runReactions(), this.interval - delta));
-    } else {
-      this._runReactions();
+      _timerID.set(this, window.setTimeout(() => this._runReactions(), this.interval - delta));
+    } else { // queue to be run when idle
+      _timerID.set(this, window.setTimeout(() => this._runReactions(), 0));
     }
   }
 
