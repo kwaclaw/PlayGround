@@ -14,37 +14,41 @@ export default class BatchScheduler {
 
   get interval() { return _interval.get(this); }
   get lastRendered() { return _lastRendered.get(this); }
+  get reactions() { return _reactions.get(this); }
 
-  // pseudo private, should not normally be called directly
+  // pseudo private, should not normally be called directly;
+  // returns number of reactions run
   _runReactions() {
-    const reactions = _reactions.get(this);
+    const reactions = this.reactions;
     reactions.forEach((reaction) => {
       try { reaction(); } catch (e) { }
     });
+    const count = reactions.size;
     reactions.clear();
 
     _timerID.set(this, null);
     _lastRendered.set(this, performance.now());
+    return count;
   }
 
   add(reaction) {
-    const reactions = _reactions.get(this);
-    reactions.add(reaction);
-    if (_timerID.get(this)) {
+    const reactions = this.reactions;
+    const firstInLongTime = reactions.count === 0;
+
+    this.reactions.add(reaction);
+    if (!firstInLongTime && _timerID.get(this)) {
       return;
     }
 
-    const now = performance.now();
-    const delta = now - this.lastRendered;
+    const delta = firstInLongTime ? 0 : performance.now() - this.lastRendered;
     if (delta < this.interval) {
-      _timerID.set(this, window.setTimeout(() => this._runReactions(), this.interval - delta));
+      _timerID.set(this, setTimeout(() => this._runReactions(), this.interval - delta));
     } else {
-      this._runReactions(this);
+      this._runReactions();
     }
   }
 
   delete(reaction) {
-    const reactions = _reactions.get(this);
-    return reactions.delete(reaction);
+    return this.reactions.delete(reaction);
   }
 }

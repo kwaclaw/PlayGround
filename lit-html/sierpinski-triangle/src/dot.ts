@@ -21,7 +21,7 @@ export class Dot extends ModelBoundElement<DotModel> {
       background: hover ? '#ff0' : '#61dafb',
     });
 
-    const slowDown = true;
+    const slowDown = false;
     if (slowDown) {
       const e = performance.now() + 0.8;
       while (performance.now() < e) {
@@ -29,27 +29,26 @@ export class Dot extends ModelBoundElement<DotModel> {
       }
     }
 
-    return html`
-      <style>
-        :host {
-          position: absolute;
-          background: #61dafb;
-          font: normal 15px sans-serif;
-          text-align: center;
-          cursor: pointer;
-        }
-        div {
-          position: absolute;
-          background: #61dafb;
-          font: normal 15px sans-serif;
-          text-align: center;
-          cursor: pointer;
-        }
-      </style>
-      <div style="${style}" @mouseover="${() => m.enter()}" @mouseout="${() => m.leave()}">
-        ${hover ? '*' : ''}<slot></slot>${hover ? '*' : ''}
-      </div>
-    `;
+    return html`<style>
+  :host {
+    position: absolute;
+    background: #61dafb;
+    font: normal 15px sans-serif;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  div {
+    position: absolute;
+    background: #61dafb;
+    font: normal 15px sans-serif;
+    text-align: center;
+    cursor: pointer;
+  }
+</style>
+<div style="${style}" @mouseover="${() => m.enter()}" @mouseout="${() => m.leave()}">
+  ${hover ? '*' : ''}<slot></slot>${hover ? '*' : ''}
+</div>`;
   }
 }
 

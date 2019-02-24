@@ -1,14 +1,14 @@
 export = BatchScheduler;
 
 declare class BatchScheduler {
-    constructor(interval: number);
+  constructor(interval: number);
 
-    protected _runReactions(): void;
+  protected _runReactions(): number;
+  protected readonly reactions: Set<Function>;
 
-    interval: number;
-    lastRendered: number;
+  readonly interval: number;
+  readonly lastRendered: number;
 
-    add(reaction: Function): void;
-    delete(reaction: Function): boolean;
+  add(reaction: Function): void;
+  delete(reaction: Function): boolean;
 }
-

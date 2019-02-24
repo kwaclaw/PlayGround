@@ -1,27 +1,27 @@
 import { observable } from '@nx-js/observer-util/dist/es.es6.js';
 
 export class DotModel {
-    constructor(x?: number, y?: number, size?: number) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
+  constructor(x?: number, y?: number, size?: number) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
 
-        return observable(this);
-    }
+    return observable(this);
+  }
 
-    x?: number;
+  x?: number;
 
-    y?: number;
-  
-    size?: number;
-  
-    hover: boolean = false;
+  y?: number;
 
-    enter() {
-        this.hover = true;
-    }
+  size?: number;
 
-    leave() {
-        this.hover = false;
-    }
+  hover: boolean = false;
+
+  enter() {
+    this.hover = true;
+  }
+
+  leave() {
+    this.hover = false;
+  }
 }

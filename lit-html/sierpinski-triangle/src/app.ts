@@ -20,22 +20,51 @@ const containerStyle = {
   background: '#eee',
 };
 
-class DemoScheduler extends BatchScheduler {
-  constructor(interval: number) {
-    super(interval);
-    this._startTime = performance.now();
-    this._renderCount = 0;
+class AnimationScheduler {
+  constructor(render: () => void) {
+    this.render = render;
+    this.elapsed = 0;
+    this.renderCount = 0;
   }
 
-  private _startTime: number;
-  private _renderCount: number;
+  private rafID?: number;
+  private render: () => void;
+  private startTime: number;
 
-  get renderCount() { return this._renderCount; }
-  get totalTime() { return performance.now() - this._startTime; }
+  elapsed: number;
+  renderCount: number;
 
-  _runReactions(): void {
-    super._runReactions();
-    this._renderCount += 1;
+  start() {
+    this.startTime = performance.now();
+    const update = () => {
+      this.elapsed = performance.now() - this.startTime;
+      this.renderCount += 1;
+      this.render();
+      this.rafID = requestAnimationFrame(update);
+    }
+    this.rafID = requestAnimationFrame(update);
+  }
+
+  stop() {
+    cancelAnimationFrame(this.rafID!);
+  }
+}
+
+class NodeBatchScheduler extends BatchScheduler {
+  constructor(interval: number) {
+    super(interval);
+    this.renderCount = 0;
+    this.renderRequestCount = 0;
+  }
+
+  renderCount: number;
+  renderRequestCount: number;
+
+  _runReactions(): number {
+    const count = super._runReactions();
+    this.renderCount += 1;
+    this.renderRequestCount = count;
+    return count;
   }
 }
 
@@ -44,44 +73,58 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
     super();
     this.model = new AppModel(1000);
 
-    // here we batch up render requests to run at most every 16 milliseconds;
+    // for animation we dont need to observe a view model, we just render periodically
+    this.animationScheduler = new AnimationScheduler(() => this._doRender());
+
+    // here we batch up render requests for child nodes to run at most every 100 milliseconds;
     // highest frequency depends on mimimum delay for window.setTimeout()
-    this.scheduler = new DemoScheduler(16);
+    this.nodeScheduler = new NodeBatchScheduler(100);
 
     // here we are using a low priority queue to schedule rendering
-    // this.scheduler = new Queue(priorities.LOW);
+    //this.nodeScheduler = new Queue(priorities.LOW);
   }
+
+  private animationScheduler: AnimationScheduler;
+  private nodeScheduler: Object;
 
   connectedCallback() {
     super.connectedCallback();
     this.model.start();
+    this.animationScheduler.start();
   }
 
   disconnectedCallback() {
+    this.animationScheduler.stop();
     this.model.stop();
     super.disconnectedCallback();
   }
 
   render() {
-    let { elapsed, triangleModel } = this.model;
+    let elapsed = this.animationScheduler.elapsed;
+    let triangleModel = this.model.triangleModel;
 
     const t = (elapsed! / 1000) % 10;
     const scale = 1 + (t > 5 ? 10 - t : t) / 10;
     const transform = 'scaleX(' + (scale / 2.1) + ') scaleY(0.7) translateZ(0.1px)';
     const style = styleMap({ ...containerStyle, transform });
 
-    const rendersPerSecond = this.scheduler.renderCount * 1000 / this.scheduler.totalTime;
+    const animationsPerSecond = this.animationScheduler.renderCount * 1000 / elapsed;
+    let rendersPerSecond: any = 'not implemented';
+    let renderRequestsPerEvent: any = 'not implemented';
+    if (this.nodeScheduler['renderCount']) {
+      rendersPerSecond = (this.nodeScheduler['renderCount'] * 1000 / elapsed).toFixed(2);
+      renderRequestsPerEvent = this.nodeScheduler['renderRequestCount'];
+    }
 
     return html`
-      <div>
-        <span>Render events per second: ${rendersPerSecond.toFixed(2)}</span>
-      </div>
-      <div style="${style}">
-        <div>
-          <s-triangle .model="${triangleModel}" .scheduler="${this.scheduler}"></s-triangle>
-        </div>
-      </div>
-    `;
+<div><span>Animation render events per second: ${animationsPerSecond.toFixed(2)}</span></div>
+<div><span>Node render events per second: ${rendersPerSecond}</span></div>
+<div><span>Node render requests per event: ${renderRequestsPerEvent}</span></div>
+<div style="${style}">
+  <div>
+    <s-triangle .model="${triangleModel}" .scheduler="${this.nodeScheduler}"></s-triangle>
+  </div>
+</div>`;
   }
 }
 
