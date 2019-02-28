@@ -1,12 +1,10 @@
 
 import { html } from 'lit-html';
 import { styleMap } from 'lit-html/directives/style-map';
-import { AppModel } from './app-model';
 import { Queue, priorities } from '@nx-js/queue-util';
+import { LitMvvmElement, BatchScheduler } from 'lit-mvvm';
 
-// ES6 modules with default export
-import ModelBoundElement from './model-bound-element';
-import BatchScheduler from './batch-scheduler';
+import { AppModel } from './app-model';
 
 import './triangle';
 
@@ -68,7 +66,7 @@ class NodeBatchScheduler extends BatchScheduler {
   }
 }
 
-export class TriangleApplication extends ModelBoundElement<AppModel> {
+export class TriangleApplication extends LitMvvmElement<AppModel> {
   constructor() {
     super();
     this.model = new AppModel(1000);
@@ -103,6 +101,8 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
     let elapsed = this.animationScheduler.elapsed;
     let triangleModel = this.model.triangleModel;
 
+    //return html`<div><span>Animation render events per second: 444</span></div>`;
+
     const t = (elapsed! / 1000) % 10;
     const scale = 1 + (t > 5 ? 10 - t : t) / 10;
     const transform = 'scaleX(' + (scale / 2.1) + ') scaleY(0.7) translateZ(0.1px)';
@@ -111,13 +111,12 @@ export class TriangleApplication extends ModelBoundElement<AppModel> {
     const animationsPerSecond = this.animationScheduler.renderCount * 1000 / elapsed;
     let rendersPerSecond: any = 'not implemented';
     let renderRequestsPerEvent: any = 'not implemented';
-    if (this.nodeScheduler['renderCount']) {
+    if (this.nodeScheduler['renderCount'] != null) {
       rendersPerSecond = (this.nodeScheduler['renderCount'] * 1000 / elapsed).toFixed(2);
       renderRequestsPerEvent = this.nodeScheduler['renderRequestCount'];
     }
 
-    return html`
-<div><span>Animation render events per second: ${animationsPerSecond.toFixed(2)}</span></div>
+    return html`<div><span>Animation render events per second: ${animationsPerSecond.toFixed(2)}</span></div>
 <div><span>Node render events per second: ${rendersPerSecond}</span></div>
 <div><span>Node render requests per event: ${renderRequestsPerEvent}</span></div>
 <div style="${style}">

@@ -1,23 +1,26 @@
 {
   "name": "sierpinski-triangle",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
-    "build:watch": "parcel watch index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "The Polymer Authors, Karl Waclawek",
+  "author": "Karl Waclawek",
   "license": "BSD-3-Clause",
   "dependencies": {
     "@nx-js/observer-util": "^4.2.2",
     "@nx-js/queue-util": "^1.1.1",
     "lit-html": "^1.0.0",
-    "typescript": "^3.3.3"
+    "lit-mvvm": "file:./lit-mvvm"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.11.0"
+    "typescript": "^3.3.3",
+    "owc-dev-server": "^0.1.6"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ],
+  "scripts": {
+    "start-demo": "owc-dev-server --open demo/sierpinski-triangle",
+    "build-demo": "tsc --build demo/sierpinski-triangle/",
+    "build-demo:watch": "tsc --watch demo/sierpinski-triangle"
   }
 }

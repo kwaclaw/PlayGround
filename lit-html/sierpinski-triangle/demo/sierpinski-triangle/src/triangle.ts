@@ -1,16 +1,19 @@
 
 import { html } from 'lit-html';
-import { TriangleModel } from './triangle-model';
+import { LitMvvmElement } from 'lit-mvvm';
 
-// ES6 module with default export
-import ModelBoundElement from './model-bound-element';
+import { TriangleModel } from './triangle-model';
 
 import './dot';
 
 //TODO if we want the dots to be rendered early we need a different way to build the tree structure,
 // because currently they are eligible for rendering only once the whole tree is built
 
-export class SierpinskiTriangle extends ModelBoundElement<TriangleModel> {
+export class SierpinskiTriangle extends LitMvvmElement<TriangleModel> {
+  constructor() {
+    super();
+  }
+
   render() {
     let m = this.model;
     if (m.dot) {

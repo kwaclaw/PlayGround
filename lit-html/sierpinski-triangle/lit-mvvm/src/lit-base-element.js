@@ -1,6 +1,6 @@
 import { html, render, TemplateResult } from 'lit-html';
 
-export default class TemplatedElement extends HTMLElement {
+export default class LitBaseElement extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });

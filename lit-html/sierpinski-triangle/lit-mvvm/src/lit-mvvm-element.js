@@ -1,11 +1,11 @@
-import { observe, unobserve } from '@nx-js/observer-util/dist/es.es6.js';
+import { observe, unobserve } from '@nx-js/observer-util';
 
-import TemplatedElement from './templated-element';
+import LitBaseElement from './lit-base-element';
 
 const _model = new WeakMap();
 const _scheduler = new WeakMap();
 
-export default class ModelBoundElement extends TemplatedElement {
+export default class LitMvvmElement extends LitBaseElement {
   get model() { return _model.get(this); }
   set model(value) { _model.set(this, value); }
 

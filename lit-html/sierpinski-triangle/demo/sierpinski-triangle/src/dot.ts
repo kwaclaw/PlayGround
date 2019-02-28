@@ -1,12 +1,16 @@
 
 import { html } from 'lit-html';
 import { styleMap } from 'lit-html/directives/style-map';
+import { LitMvvmElement } from 'lit-mvvm';
+
 import { DotModel } from './dot-model';
 
-// ES6 module with default export
-import ModelBoundElement from './model-bound-element';
 
-export class Dot extends ModelBoundElement<DotModel> {
+export class Dot extends LitMvvmElement<DotModel> {
+  constructor() {
+    super();
+  }
+
   render() {
     let m = this.model;
     let { x, y, size, hover } = m;

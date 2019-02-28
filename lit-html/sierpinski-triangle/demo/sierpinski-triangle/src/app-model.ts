@@ -1,5 +1,5 @@
-import { TriangleModel } from "./triangle-model";
-import { observable } from '@nx-js/observer-util/dist/es.es6.js';
+import { observable } from '@nx-js/observer-util';
+import { TriangleModel } from './triangle-model';
 
 export class AppModel {
   private intervalID?: number;
